@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="author" content="Lilian">
+        <title>Dungeon Loot Splitter</title>
+        <link rel="stylesheet" href="css/style.css" type="text/css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&family=Roboto+Mono">
+    </head>
+    <body>
+        <header>
+            <!-- BEGIN ROW ONE -->
+            <h1>Dungeon Loot Splitter</h1>
+        </header>
+        
+        <main>
+            
+            <!-- BEGIN ROW TWO -->
+            <section class="panel">
+                <h2>Party Setup</h2>
+                <div class="field-pair">
+                    <label for="partySize">Number of Party Members:</label>
+                    <input type="number" id="partySize" name="partySize" min="1" step="1" value="1">
+                </div>
+            </section>
+
+            <section class="panel">
+                <h2>Add Loot</h2>
+                <form id="lootForm">
+                    <div class="loot-fields">
+                        <div class="field-pair">
+                            <label for="lootName">Loot Name:</label>
+                            <input type="text" id="lootName" name="lootName">
+                        </div>
+
+                        <div class="field-pair">
+                            <label for="lootValue">Loot Value:</label>
+                            <input type="number" id="lootValue" name="lootValue" min="0.01" step="0.01">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="lootRarity">Rarity:</label>
+                        <select id="lootRarity" name="lootRarity">
+                            <option value="common">Common</option>
+                            <option value="uncommon">Uncommon</option>
+                            <option value="rare">Rare</option>
+                            <option value="epic">Epic</option>
+                            <option value="legendary">Legendary</option>
+                        </select>
+                    </div>
+                    <div id="lootError" class="error" aria-live="polite"></div>
+                    <div>
+                        <button type="submit" class="add-loot-btn">Add Loot</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- BEGIN ROW THREE -->
+            <section class="panel">
+                <h2>Loot List</h2>
+                <div id="lootList" aria-live="polite"></div>
+                <div id="totalLoot" aria-live="polite"><strong>Total Loot:</strong></div>
+            </section>
+            <section class="panel">
+                <h2>Split Loot</h2>
+                <button id="splitBtn">Split Loot</button>
+                <div id="partyError" class="error" aria-live="polite"></div>
+                <div id="result" aria-live="polite">
+                    <p><strong>Total Loot:</strong></p>
+                    <p><strong>Loot Per Party Member:</strong></p>
+                </div>
+            </section>
+
+            <!-- BEGIN ROW FOUR -->
+            <section class="panel reflection">
+                <h2>Logic Explanation</h2>
+                <p>
+                    I use global <code>Loot</code> array to store all loot items. Each time the user submits the Add 
+                    Loot form, a new item containing the loot name and value is pushed into this array so the data 
+                    persists across the entire application.
+                </p>
+                <p>
+                    I use loops in two places: a traditional <code>for</code> loop in <code>renderLoot()</code>, to 
+                    display every loot item on the page, and another <code>for</code> loop in 
+                    <code>getTotalLoot()</code> to add up all loot values and calculate the running total.
+                </p>
+                <p>
+                    I use conditional logic inside <code>addLoot()</code> to validate the loot name and loot value 
+                    before adding an item to the array. I also use conditions in <code>renderLoot()</code> to check 
+                    whether any loot exists; if the array is empty, the interface displays a message instead of a list. 
+                    In <code>splitLoot()</code>, I use conditions to ensure the party size is valid and that loot has 
+                    been entered before performing the split. These checks prevent invalid input and handle edge cases 
+                    directly inside the interface.
+                </p>
+            </section>
+            
+        </main>
+        <script src="js/script.js"></script>
+    </body>
+</html>
