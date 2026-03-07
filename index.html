@@ -32,15 +32,20 @@
                     <div class="loot-fields">
                         <div class="field-pair">
                             <label for="lootName">Loot Name:</label>
-                            <input type="text" id="lootName" name="lootName">
+                            <input type="text" id="lootName" name="lootName" placeholder="Enter loot name">
                         </div>
-
                         <div class="field-pair">
                             <label for="lootValue">Loot Value:</label>
-                            <input type="number" id="lootValue" name="lootValue" min="0.01" step="0.01">
+                            <input type="number" id="lootValue" name="lootValue" min="0" step="0.01" 
+                                placeholder="Enter loot value">
+                        </div>
+                        <div class="field-pair">
+                            <label for="lootQuantity">Loot Quantity:</label>
+                            <input type="number" id="lootQuantity" name="lootQuantity" min="1" step="1" value="1" 
+                                placeholder="Enter loot quantity">
                         </div>
                     </div>
-                    <div>
+                    <div class="field-pair">
                         <label for="lootRarity">Rarity:</label>
                         <select id="lootRarity" name="lootRarity">
                             <option value="common">Common</option>
@@ -58,41 +63,57 @@
             </section>
 
             <!-- BEGIN ROW THREE -->
-            <section class="panel">
-                <h2>Loot List</h2>
-                <div id="lootList" aria-live="polite"></div>
-                <div id="totalLoot" aria-live="polite"><strong>Total Loot:</strong></div>
+            <section class="panel loot-list" aria-labelledby="lootListHeader">
+                <h2 id="lootListHeader">Loot List</h2>
+                <div id="noLootMessage" class="error" aria-live="polite">No loot added.</div>
+                    <div class="loot-table">
+                        <!-- Header Row -->
+                        <div class="loot-header-row">
+                            <div class="loot-header">Name</div>
+                            <div class="loot-header">Value</div>
+                            <div class="loot-header">Quantity</div>
+                            <div class="loot-header">Remove</div>
+                        </div>
+
+                        <!-- Loot Items will be appended here -->
+                        <div id="lootRows"></div>
+                    </div>
+                <div class="total-loot" id="totalLoot" aria-live="polite"></div>
             </section>
-            <section class="panel">
-                <h2>Split Loot</h2>
+            <section class="panel loot-split" aria-labelledby="splitLootHeader">
+                <h2 id="splitLootHeader">Split Loot</h2>
                 <button id="splitBtn">Split Loot</button>
                 <div id="partyError" class="error" aria-live="polite"></div>
-                <div id="result" aria-live="polite">
-                    <p><strong>Total Loot:</strong></p>
-                    <p><strong>Loot Per Party Member:</strong></p>
-                </div>
+                <div id="result" aria-live="polite"></div>
             </section>
 
             <!-- BEGIN ROW FOUR -->
             <section class="panel reflection">
                 <h2>Logic Explanation</h2>
                 <p>
-                    I use global <code>Loot</code> array to store all loot items. Each time the user submits the Add 
-                    Loot form, a new item containing the loot name and value is pushed into this array so the data 
-                    persists across the entire application.
+                    The loot array is the single source of truth because it stores every item's name, value, and 
+                    quantity, and all total calculations come directly from this data. Quantity was added so total loot 
+                    could be computed from value x quantity instead of treating each item as a single unit.
                 </p>
                 <p>
-                    I use loops in two places: a traditional <code>for</code> loop in <code>renderLoot()</code>, to 
-                    display every loot item on the page, and another <code>for</code> loop in 
-                    <code>getTotalLoot()</code> to add up all loot values and calculate the running total.
+                    All total calculations occur inside <code>updateUI()</code>, which recomputes the total loot value, 
+                    and determines the amount each party member receives. The <code>renderLoot()</code> function is 
+                    responsible only for rebuilding the visible loot list from the current state.
                 </p>
                 <p>
-                    I use conditional logic inside <code>addLoot()</code> to validate the loot name and loot value 
-                    before adding an item to the array. I also use conditions in <code>renderLoot()</code> to check 
-                    whether any loot exists; if the array is empty, the interface displays a message instead of a list. 
-                    In <code>splitLoot()</code>, I use conditions to ensure the party size is valid and that loot has 
-                    been entered before performing the split. These checks prevent invalid input and handle edge cases 
-                    directly inside the interface.
+                    Whenever the user adds loot, removes loot, or changes the party size, the state changes and 
+                    <code>updateUI()</code> recalculates totals, rebuilds the loot list, updates the split value, and 
+                    controls which sections are visible. This ensures the interface always reflects the current 
+                    application state.
+                </p>
+                <p>
+                    State also determines what the user can do. If the loot array is empty or the party size is invalid, 
+                    the Split Loot button is disabled and results stay hidden.
+                </p>
+                <p>
+                    Conditional logic in <code>addLoot()</code> prevents invalid items from entering the array, and 
+                    conditional logic in <code>updateUI()</code> prevents invalid party sizes from producing results. 
+                    This keeps the interface consistent with the underlying data at all times.
                 </p>
             </section>
             
