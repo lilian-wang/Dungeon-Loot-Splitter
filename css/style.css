@@ -94,6 +94,17 @@ form .field-pair label {
     display: none;
 }
 
+.wrapper {
+    background: none;
+    box-shadow: none;
+    padding: 0 20px 0 0;
+    min-width: 600px;
+}
+
+.wrapper:hover {
+    box-shadow: none;
+}
+
 .loot-list {
     border-radius: 10px;
     padding: 20px;
@@ -117,10 +128,9 @@ form .field-pair label {
     margin-bottom: 2rem;
     width: 100%;
     min-width: 500px;
-}
-
-.loot-table div {
+    overflow-x: auto; 
     overflow-wrap: anywhere;
+    -webkit-overflow-scrolling: touch;
     font-size: 0.9em;
 }
 

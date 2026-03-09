@@ -63,22 +63,24 @@
             </section>
 
             <!-- BEGIN ROW THREE -->
-            <section class="panel loot-list" aria-labelledby="lootListHeader">
-                <h2 id="lootListHeader">Loot List</h2>
-                <div id="noLootMessage" class="error" aria-live="polite">No loot added.</div>
-                    <div class="loot-table">
-                        <!-- Header Row -->
-                        <div class="loot-header-row">
-                            <div class="loot-header">Name</div>
-                            <div class="loot-header">Value</div>
-                            <div class="loot-header">Quantity</div>
-                            <div class="loot-header">Remove</div>
-                        </div>
+            <section class="panel wrapper" aria-labelledby="lootListHeader">
+                <div class="loot-list">
+                    <h2 id="lootListHeader">Loot List</h2>
+                    <div id="noLootMessage" class="error" aria-live="polite">No loot added.</div>
+                        <div class="loot-table">
+                            <!-- Header Row -->
+                            <div class="loot-header-row">
+                                <div class="loot-header">Name</div>
+                                <div class="loot-header">Value</div>
+                                <div class="loot-header">Quantity</div>
+                                <div class="loot-header">Remove</div>
+                            </div>
 
-                        <!-- Loot Items will be appended here -->
-                        <div id="lootRows"></div>
-                    </div>
-                <div class="total-loot" id="totalLoot" aria-live="polite"></div>
+                            <!-- Loot Items will be appended here -->
+                            <div id="lootRows"></div>
+                        </div>
+                    <div class="total-loot" id="totalLoot" aria-live="polite"></div>
+                </div>
             </section>
             <section class="panel loot-split" aria-labelledby="splitLootHeader">
                 <h2 id="splitLootHeader">Split Loot</h2>
